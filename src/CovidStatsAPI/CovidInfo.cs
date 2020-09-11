@@ -10,7 +10,7 @@ namespace CovidStatsAPI
         private void DownloadCovidInfoFile(string url, string filename)
 		{
 			HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
-    		HttpWebResponse resp = (HttpWebResponse)req.GetResponse();
+			HttpWebResponse resp = (HttpWebResponse)req.GetResponse();
 
     		StreamReader sr = new StreamReader(resp.GetResponseStream());
     		string results = sr.ReadToEnd();
@@ -23,10 +23,16 @@ namespace CovidStatsAPI
 
 		public IEnumerable<string[]> GetInfo(string country) 
 		{
-			this.DownloadCovidInfoFile("https://opendata.ecdc.europa.eu/covid19/casedistribution/csv", "covid.csv");
+			//this.DownloadCovidInfoFile("https://opendata.ecdc.europa.eu/covid19/casedistribution/csv", "covid.csv");
+
+			// No need to download the covid.csv file. Just take the HttpWebResponse as a response stream
+			
+			string url = "https://opendata.ecdc.europa.eu/covid19/casedistribution/csv";
+			HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
+			HttpWebResponse resp = (HttpWebResponse)req.GetResponse();
 
 			List<string[]> result = new List<string[]>();
-			using (StreamReader sr = new StreamReader("covid.csv")) 
+			using (StreamReader sr = new StreamReader(resp.GetResponseStream()))
 			{
 				// Add header row
 				result.Add(sr.ReadLine().Split(','));
