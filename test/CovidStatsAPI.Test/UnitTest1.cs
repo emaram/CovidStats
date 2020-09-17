@@ -29,8 +29,9 @@ namespace CovidStatsAPI.Test
 			
 			string[] todayData = returnValue[1];
 			
-			string expectedDate = DateTime.Now.Year.ToString() + "/" + DateTime.Now.Month.ToString() + "-" + DateTime.Now.Day.ToString();
-			string actualDate = todayData[3] + "-" + todayData[2] + "-" + todayData[1];
+			string sep = "-";
+			string expectedDate = DateTime.Now.Year.ToString() + sep + DateTime.Now.Month.ToString() + sep + DateTime.Now.Day.ToString();
+			string actualDate = todayData[3] + sep + todayData[2] + sep + todayData[1];
 			
 			Assert.Equal(expectedDate, actualDate);
 		}
